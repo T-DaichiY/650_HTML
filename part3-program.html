@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>R for Data Science — PART III Program Study Page</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blue:#4471B8; --blue-light:#E2EBF7; --blue-mid:#A8C0E5;
+  --green:#3C8A5A; --green-light:#E2F0EA;
+  --amber:#B87830; --amber-light:#F8F0E1;
+  --red:#B84848; --red-light:#F7E2E2;
+  --purple:#7256AC; --purple-light:#ECEAF7;
+  --pink:#B84878; --pink-light:#F5E5EF;
+  --teal:#2E7D8A; --teal-light:#E0F0F3;
+  --gray:#6b7280; --gray-light:#f3f4f6;
+  --ink:#111827; --ink2:#374151; --ink3:#6b7280;
+  --border:#E2E2DE; --bg:#F6F6F3; --white:#fff;
+  --shadow:0 8px 22px rgba(17,24,39,.06);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--ink);padding:32px 16px 80px;max-width:1120px;margin:0 auto;line-height:1.72}
+code,kbd,.mono{font-family:'JetBrains Mono',monospace}
+code{background:var(--gray-light);border:1px solid rgba(0,0,0,.05);padding:1px 5px;border-radius:5px;font-size:12px;color:#263244}
+kbd{font-size:11px;background:#111827;color:#fff;padding:2px 6px;border-radius:5px}
+h1{font-size:25px;font-weight:800;letter-spacing:.01em;margin-bottom:6px}
+h2{font-size:20px;font-weight:800;margin:0 0 10px}
+h3{font-size:15px;font-weight:800;margin:0 0 8px}
+p{font-size:13.5px;color:var(--ink2)}
+a{color:var(--blue);text-decoration:none}
+.hl{background:linear-gradient(transparent 60%,rgba(250,210,0,.72) 60%);padding-bottom:1px}
+.hl-s{background:linear-gradient(transparent 54%,rgba(250,195,0,.85) 54%);font-weight:800;padding-bottom:1px}
+.subtitle{font-size:13px;color:var(--ink3);margin-bottom:22px;line-height:1.9}
+.topbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:10px 0 22px}
+.badge{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--border);background:#fff;border-radius:999px;padding:5px 10px;font-size:11.5px;font-weight:700;color:var(--ink2)}
+.badge .dot{width:8px;height:8px;border-radius:50%}
+.term{display:inline-flex;align-items:center;border-radius:6px;overflow:hidden;font-size:12px;font-weight:800;vertical-align:middle;margin:1px 2px;border:1px solid rgba(0,0,0,.08)}
+.term-jp{padding:2px 7px}.term-en{padding:2px 7px;font-family:'JetBrains Mono',monospace;font-size:11px}
+.term-blue .term-jp{background:var(--blue);color:#fff}.term-blue .term-en{background:var(--blue-light);color:var(--blue)}
+.term-green .term-jp{background:var(--green);color:#fff}.term-green .term-en{background:var(--green-light);color:var(--green)}
+.term-amber .term-jp{background:var(--amber);color:#fff}.term-amber .term-en{background:var(--amber-light);color:var(--amber)}
+.term-red .term-jp{background:var(--red);color:#fff}.term-red .term-en{background:var(--red-light);color:var(--red)}
+.term-purple .term-jp{background:var(--purple);color:#fff}.term-purple .term-en{background:var(--purple-light);color:var(--purple)}
+.term-teal .term-jp{background:var(--teal);color:#fff}.term-teal .term-en{background:var(--teal-light);color:var(--teal)}
+.term-gray .term-jp{background:#4A5568;color:#fff}.term-gray .term-en{background:var(--gray-light);color:#4A5568}
+.pipeline{display:flex;align-items:center;flex-wrap:wrap;gap:6px;background:#fff;border:1px solid var(--border);border-radius:14px;padding:14px 16px;margin:18px 0 26px;box-shadow:var(--shadow)}
+.pipe-box{background:var(--gray-light);border:1px solid var(--border);border-radius:8px;padding:5px 11px;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;color:#293241}
+.pipe-arr{color:#cbd5e1;font-size:16px;font-weight:800}
+.nav{position:sticky;top:0;z-index:10;margin:0 0 26px;padding:10px;background:rgba(246,246,243,.88);backdrop-filter:blur(10px);border-bottom:1px solid rgba(226,226,222,.75)}
+.nav-inner{display:flex;gap:8px;flex-wrap:wrap}
+.nav a{font-size:11.5px;font-weight:800;background:#fff;border:1px solid var(--border);border-radius:999px;padding:5px 10px;color:var(--ink2)}
+.nav a:hover{background:var(--blue-light);color:var(--blue);border-color:var(--blue-mid)}
+.sec{font-size:11px;font-weight:800;color:var(--ink3);letter-spacing:.08em;text-transform:uppercase;margin:8px 0 10px}
+.unit-wrap{display:grid;grid-template-columns:1fr 224px;gap:16px;align-items:start;margin-bottom:8px}
+@media(max-width:780px){.unit-wrap{grid-template-columns:1fr}.unit-terms{position:static}.nav{position:static}.hero-grid,.grid2,.grid3,.branch{grid-template-columns:1fr!important}}
+.unit-terms{position:sticky;top:56px;background:#fff;border:1px solid var(--border);border-radius:14px;padding:14px 14px 10px;box-shadow:var(--shadow)}
+.unit-terms-hd{font-size:10px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--ink3);margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:5px}
+.ut-item{margin-bottom:10px;padding-bottom:10px;border-bottom:.5px solid var(--border)}
+.ut-item:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none}
+.ut-sym{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:800;margin-bottom:1px}.ut-ja{font-size:12px;font-weight:800;color:var(--ink)}.ut-en{font-size:10px;color:var(--ink3);font-style:italic;margin-bottom:3px}.ut-def{font-size:11px;color:var(--ink2);line-height:1.5;margin-top:2px}
+.flow{display:flex;flex-direction:column;gap:0}
+.step-wrap{display:flex;align-items:stretch;gap:12px}
+.step-line{display:flex;flex-direction:column;align-items:center}
+.num{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;flex-shrink:0}
+.vline{width:2px;flex:1;min-height:20px;background:var(--border);margin:4px 0}.step-wrap:last-child .vline{background:transparent}
+.step-box{flex:1;border:1px solid var(--border);border-radius:14px;padding:15px 16px;background:#fff;margin-bottom:10px;box-shadow:var(--shadow)}
+.step-title{font-size:15px;font-weight:800;margin-bottom:8px}.step-desc{font-size:13px;color:var(--ink2);line-height:1.9}.step-desc ul{padding-left:20px;margin-top:8px}.step-desc li{margin:3px 0}
+.hero-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:12px;margin:12px 0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:10px 0}
+.card{border:1px solid var(--border);border-radius:12px;padding:11px 12px;background:var(--gray-light)}
+.card-label{font-size:11px;color:var(--ink3);margin-bottom:4px;font-weight:700}.card-val{font-size:15px;font-weight:800}.card-sub{font-size:11.5px;color:var(--ink3);margin-top:4px;line-height:1.6}
+.b-green{border-color:#7ACC96;background:var(--green-light)}.b-red{border-color:#E8A0A0;background:var(--red-light)}.b-blue{border-color:var(--blue-mid);background:var(--blue-light)}.b-amber{border-color:#D4AA55;background:var(--amber-light)}.b-purple{border-color:#b9a8e5;background:var(--purple-light)}.b-teal{border-color:#90cbd4;background:var(--teal-light)}
+.note-box{border:1px solid var(--border);border-radius:12px;background:#fff;padding:12px 14px;margin-top:10px}.note-title{font-size:13px;font-weight:800;margin-bottom:6px}.note-text{font-size:12px;color:var(--ink2);line-height:1.75}
+.kids-box{background:#fffbeb;border:2px solid #D4AA55;border-radius:12px;padding:13px 15px;margin-top:12px}.kids-title{font-size:13px;font-weight:800;color:#7A5520;margin-bottom:7px;display:flex;align-items:center;gap:6px}.kids-text{font-size:13px;color:#78350f;line-height:1.9;font-weight:600}.kids-text strong{color:#B87830}
+.r-console{margin-top:12px;background:#0f172a;color:#e5e7eb;border-radius:13px;border:1px solid #1e293b;overflow:hidden;box-shadow:0 10px 22px rgba(2,6,23,.12)}
+.r-topbar{display:flex;align-items:center;justify-content:space-between;background:#111827;padding:9px 13px;border-bottom:1px solid #1f2937}.r-dots{display:flex;gap:7px}.r-dot{width:10px;height:10px;border-radius:50%}.r-title{font-size:11px;color:#94a3b8;font-family:'JetBrains Mono',monospace}.r-body{font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.75;padding:13px 15px;white-space:pre-wrap;overflow-x:auto}.r-prompt{color:#93c5fd}.r-cmd{color:#e2e8f0}.r-out{color:#cbd5e1}.r-green{color:#86efac}.r-yellow{color:#fde68a}.r-red{color:#fca5a5}.r-gray{color:#64748b;font-style:italic}.r-cyan{color:#67e8f9}.r-purple{color:#d8b4fe}
+.compare-table{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:12px}.compare-table th{background:var(--gray-light);padding:8px 10px;text-align:left;font-size:11px;font-weight:800;border:1px solid var(--border);color:var(--ink3)}.compare-table td{padding:8px 10px;border:1px solid var(--border);color:var(--ink2);vertical-align:top}.compare-table td.mono{font-family:'JetBrains Mono',monospace;color:var(--blue);font-weight:800;white-space:nowrap}
+.branch{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}.branch-cell{border:1px solid var(--border);border-radius:10px;padding:10px 12px}.branch-lbl{font-size:10.5px;font-weight:800;color:var(--ink3);margin-bottom:5px;text-transform:uppercase;letter-spacing:.04em}.branch-val{font-size:13px;color:var(--ink);line-height:1.65}
+.div{height:1px;background:var(--border);margin:24px 0}.callout{padding:14px 16px;border-radius:14px;border:1px solid var(--border);background:#fff;margin:12px 0;box-shadow:var(--shadow)}
+.callout-title{font-size:14px;font-weight:800;margin-bottom:6px}.pill-row{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}.mini-pill{font-size:11px;font-weight:800;padding:3px 8px;border-radius:999px;background:var(--gray-light);border:1px solid var(--border);color:var(--ink2)}
+/* Quiz */
+.mcq-block{margin-top:18px;background:linear-gradient(135deg,#f8faff 0%,#f3f4f6 100%);border:1.5px solid var(--blue-mid);border-radius:14px;overflow:hidden;box-shadow:var(--shadow)}.mcq-header{background:var(--blue);padding:10px 16px;display:flex;align-items:center;gap:8px}.mcq-header-title{color:#fff;font-size:12px;font-weight:800;letter-spacing:.05em}.mcq-score-badge{margin-left:auto;background:rgba(255,255,255,.2);color:#fff;font-size:11px;padding:2px 8px;border-radius:20px;font-weight:800}.mcq-body{padding:14px 16px}.mcq-q{margin-bottom:14px;padding-bottom:14px;border-bottom:.5px solid var(--border)}.mcq-q:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none}.mcq-qnum{font-size:10px;font-weight:800;color:var(--blue);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}.mcq-qtext{font-size:13px;color:var(--ink);margin-bottom:8px;line-height:1.75;font-weight:700}.mcq-opts{display:flex;flex-direction:column;gap:5px}.mcq-opt{display:flex;align-items:flex-start;gap:8px;padding:7px 11px;border-radius:8px;border:1px solid var(--border);background:#fff;cursor:pointer;font-size:12.5px;color:var(--ink2);line-height:1.55;text-align:left;transition:all .15s;width:100%}.mcq-opt:hover:not([disabled]){border-color:var(--blue);background:var(--blue-light);color:var(--blue)}.mcq-opt .opt-label{font-family:'JetBrains Mono',monospace;font-weight:800;font-size:12px;flex-shrink:0;margin-top:1px}.mcq-opt.correct{border-color:var(--green)!important;background:var(--green-light)!important;color:#1a4d2e!important}.mcq-opt.wrong{border-color:var(--red)!important;background:var(--red-light)!important;color:#7a1a1a!important;opacity:.8}.mcq-opt.reveal-correct{border-color:var(--green)!important;background:var(--green-light)!important;color:#1a4d2e!important;opacity:.9}.mcq-opt[disabled]{cursor:default}.mcq-fb{margin-top:7px;font-size:12px;border-radius:7px;padding:7px 10px;display:none;line-height:1.65}.mcq-fb.show{display:block}.mcq-fb.fb-ok{background:var(--green-light);color:#1a4d2e;border:1px solid #7ACC96}.mcq-fb.fb-ng{background:var(--red-light);color:#7a1a1a;border:1px solid #E8A0A0}.mcq-progress{height:4px;background:var(--blue-light);border-radius:0 0 12px 12px;overflow:hidden}.mcq-progress-bar{height:100%;background:var(--green);border-radius:0 0 12px 12px;transition:width .4s ease}.hidden{display:none}
+.footer{font-size:11.5px;color:var(--ink3);margin-top:30px;text-align:center}.small{font-size:11.5px;color:var(--ink3)}
+</style>
+</head>
+<body>
+
+<h1>R for Data Science <span style="font-size:14px;font-weight:500;color:var(--ink3)">/ PART III「Program」勉強ページ</span></h1>
+<p class="subtitle">
+  このページは <em>R for Data Science</em> の <span class="hl-s">PART III: Program</span> を、授業・自習で使いやすいように再構成したものです。目的は、Rの文法を暗記することではなく、<strong>読みやすく、再利用でき、あとで直しやすいコードを書く力</strong>を育てることです。<br>
+  参考HTMLのレイアウトに合わせて、<strong>流れ図・用語カード・Rコンソール例・小学生でもわかる説明・自動採点クイズ</strong>を入れています。
+</p>
+
+<div class="topbar">
+  <div class="badge"><span class="dot" style="background:var(--blue)"></span>Chapter 14: Pipes</div>
+  <div class="badge"><span class="dot" style="background:var(--green)"></span>Chapter 15: Functions</div>
+  <div class="badge"><span class="dot" style="background:var(--purple)"></span>Chapter 16: Vectors</div>
+  <div class="badge"><span class="dot" style="background:var(--amber)"></span>Chapter 17: Iteration Preview</div>
+</div>
+
+<div class="pipeline">
+  <div class="pipe-box">Code = Communication</div><div class="pipe-arr">→</div>
+  <div class="pipe-box">Pipe %&gt;%</div><div class="pipe-arr">→</div>
+  <div class="pipe-box">Functions</div><div class="pipe-arr">→</div>
+  <div class="pipe-box">DRY</div><div class="pipe-arr">→</div>
+  <div class="pipe-box">Vectors</div><div class="pipe-arr">→</div>
+  <div class="pipe-box">Lists</div><div class="pipe-arr">→</div>
+  <div class="pipe-box">S3 Classes</div><div class="pipe-arr">→</div>
+  <div class="pipe-box">Iteration</div>
+</div>
+
+<div class="nav">
+  <div class="nav-inner">
+    <a href="#overview">Overview</a>
+    <a href="#ch14">Ch14 Pipe</a>
+    <a href="#ch15">Ch15 Functions</a>
+    <a href="#ch16">Ch16 Vectors</a>
+    <a href="#ch17">Ch17 Preview</a>
+    <a href="#finalquiz">Final Quiz</a>
+  </div>
+</div>
+
+<!-- ============================================================ OVERVIEW ============================================================ -->
+<div id="overview" class="sec">PART III Overview — Program / プログラミング</div>
+<div class="unit-wrap">
+  <div class="flow">
+    <div class="step-wrap">
+      <div class="step-line"><div class="num" style="background:var(--blue-light);color:var(--blue)">①</div><div class="vline"></div></div>
+      <div class="step-box">
+        <div class="step-title" style="color:var(--blue)">💬 Code is communication / コードは「コンピュータへの命令」だけではない</div>
+        <div class="step-desc">
+          PART IIIの中心メッセージは、<span class="hl-s">コードはコミュニケーションの道具</span>だということです。もちろんコードはコンピュータに命令します。しかし同時に、他の人、そして<strong>未来の自分</strong>に「なぜこの分析をこう進めたのか」を伝えます。だから、速く書けるコードよりも、あとで読んで意味がわかるコードの方が長期的には強いです。
+        </div>
+        <div class="hero-grid">
+          <div class="card b-blue"><div class="card-label">考え方</div><div class="card-val">今の自分 → 未来の自分へのメモ</div><div class="card-sub">数週間後の自分は、ほぼ他人です。変数名・関数名・コメントで「意図」を残します。</div></div>
+          <div class="card b-green"><div class="card-label">実践</div><div class="card-val">Solve → Rewrite → Reuse</div><div class="card-sub">まず動かす。そのあと、読みやすく書き直す。繰り返す部分は関数化します。</div></div>
+        </div>
+        <div class="kids-box">
+          <div class="kids-title">🌟 小学生でもわかる！</div>
+          <div class="kids-text">コードは「料理のレシピ」に似ています。自分だけが今わかるメモではなく、<strong>明日の自分や友達が読んでも同じ料理を作れるレシピ</strong>にするのが大事です。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-wrap">
+      <div class="step-line"><div class="num" style="background:var(--green-light);color:var(--green)">②</div><div class="vline"></div></div>
+      <div class="step-box">
+        <div class="step-title" style="color:var(--green)">🧱 PART IIIの全体構造</div>
+        <div class="step-desc">
+          このパートは、<strong>パイプで処理の流れを読む → 関数で繰り返しを減らす → ベクトルとリストでRのデータ構造を理解する → 反復処理で複数入力を処理する</strong>、という順番です。
+        </div>
+        <table class="compare-table">
+          <tr><th>Chapter</th><th>テーマ</th><th>何ができるようになるか</th><th>危険ポイント</th></tr>
+          <tr class="b-blue"><td class="mono">14</td><td>Pipe <code>%&gt;%</code></td><td>処理を上から下へ読める形で書く</td><td>長すぎるpipe、複数入力、複雑な依存関係</td></tr>
+          <tr class="b-green"><td class="mono">15</td><td>Functions</td><td>繰り返しコードを関数にして再利用する</td><td>名前が悪い関数、長すぎる関数、戻り値が不明</td></tr>
+          <tr class="b-purple"><td class="mono">16</td><td>Vectors</td><td>logical / integer / double / character、list、tibbleの違いを理解する</td><td>型変換、NA、recycling、subsettingのミス</td></tr>
+          <tr class="b-amber"><td class="mono">17</td><td>Iteration</td><td>同じ処理を複数入力に繰り返す</td><td>for loopの状態管理、map系関数の戻り値の型</td></tr>
+        </table>
+        <div class="note-box" style="border-left:4px solid var(--red)">
+          <div class="note-title" style="color:var(--red)">⚠ 添付テキストについて</div>
+          <div class="note-text">添付本文にはChapter 14–16の詳細が含まれています。Chapter 17はPART IIIのイントロで紹介されていますが、詳細本文はこの添付には入っていないため、このページでは最後に「Preview」として短く扱っています。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="unit-terms">
+    <div class="unit-terms-hd">📝 Key Terms</div>
+    <div class="ut-item"><div class="ut-sym" style="color:var(--blue)">communication</div><div class="ut-ja">コードは伝達手段</div><div class="ut-en">code communicates intent</div><div class="ut-def">コンピュータだけでなく、人間にも意味を伝える</div></div>
+    <div class="ut-item"><div class="ut-sym">future-you</div><div class="ut-ja">未来の自分</div><div class="ut-en">future reader</div><div class="ut-def">あとで読む自分を想定して書く</div></div>
+    <div class="ut-item"><div class="ut-sym" style="color:var(--green)">rewrite</div><div class="ut-ja">書き直し</div><div class="ut-en">refactoring</div><div class="ut-def">動くコードを、読みやすいコードに整える</div></div>
+    <div class="ut-item"><div class="ut-sym" style="color:var(--red)">DRY</div><div class="ut-ja">繰り返さない</div><div class="ut-en">Don't Repeat Yourself</div><div class="ut-def">同じ処理が3回出たら関数化を考える</div></div>
+  </div>
+</div>
+<div class="div"></div>
+
+<!-- ============================================================ CH14 ============================================================ -->
+<div id="ch14" class="sec">Chapter 14 — Pipes with magrittr / パイプ</div>
+<div class="unit-wrap">
+  <div class="flow">
+    <div class="step-wrap">
+      <div class="step-line"><div class="num" style="background:var(--blue-light);color:var(--blue)">①</div><div class="vline"></div></div>
+      <div class="step-box">
+        <div class="step-title" style="color:var(--blue)">🚰 Pipe <code>%&gt;%</code> の目的：処理の流れを読みやすくする</div>
+        <div class="step-desc">
+          Pipeは、複数の処理を <span class="hl-s">上から下へ、物語のように読む</span> ための道具です。Rでは関数を入れ子にできますが、入れ子が深くなると「内側から外側へ」読まなければならず、人間には読みにくくなります。
+        </div>
+        <div class="r-console">
+          <div class="r-topbar"><div class="r-dots"><div class="r-dot" style="background:#ef4444"></div><div class="r-dot" style="background:#f59e0b"></div><div class="r-dot" style="background:#22c55e"></div></div><div class="r-title">R — Pipe story</div></div>
+          <div class="r-body"><span class="r-gray"># Before: inside-out reading</span>
+bop(
+  scoop(
+    hop(foo_foo, through = forest),
+    up = field_mice
+  ),
+  on = head
+)
+
+<span class="r-gray"># After: top-to-bottom reading</span>
+foo_foo %&gt;%
+  hop(through = forest) %&gt;%
+  scoop(up = field_mice) %&gt;%
+  bop(on = head)</div>
+        </div>
+        <div class="note-box" style="border-left:4px solid var(--amber)">
+          <div class="note-title" style="color:var(--amber)">🛠 修正したミス</div>
+          <div class="note-text">元テキストのpipe例では <code>field_mouse</code> と単数形になっている箇所がありますが、前後の説明では <code>field_mice</code> なので、このページでは <code>field_mice</code> に統一しました。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-wrap">
+      <div class="step-line"><div class="num" style="background:var(--green-light);color:var(--green)">②</div><div class="vline"></div></div>
+      <div class="step-box">
+        <div class="step-title" style="color:var(--green)">🧭 同じ処理を書く4つの方法</div>
+        <div class="step-desc">Chapter 14では、同じ処理を4つの書き方で比較します。ポイントは「コンピュータにとって正しいか」だけでなく、<strong>人間が読んだときに意図が見えるか</strong>です。</div>
+        <table class="compare-table">
+          <tr><th>書き方</th><th>コードの特徴</th><th>良い点</th><th>弱点</th></tr>
+          <tr class="b-blue"><td class="mono">intermediate objects</td><td><code>foo_foo_1</code>, <code>foo_foo_2</code> を作る</td><td>途中結果を確認しやすい</td><td>名前が増えすぎる。番号ミスが起きる</td></tr>
+          <tr class="b-green"><td class="mono">overwrite</td><td>同じオブジェクトを上書きする</td><td>短く書ける</td><td>途中で失敗するとデバッグしにくい</td></tr>
+          <tr class="b-red"><td class="mono">composition</td><td>関数を入れ子にする</td><td>代入が不要</td><td>内側から外側へ読むので読みにくい</td></tr>
+          <tr class="b-purple"><td class="mono">pipe</td><td><code>x %&gt;% f() %&gt;% g()</code></td><td>処理の順番が見える</td><td>pipeを知らない人には説明が必要</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="step-wrap">
+      <div class="step-line"><div class="num" style="background:var(--amber-light);color:var(--amber)">③</div><div class="vline"></div></div>
+      <div class="step-box">
+        <div class="step-title" style="color:var(--amber)">⚙️ Pipeの裏側：一時オブジェクトに入れて順番に処理する</div>
+        <div class="step-desc">
+          <code>%&gt;%</code> は魔法ではなく、左側の結果を次の関数の第1引数として渡す仕組みです。イメージとしては、<span class="hl">一時的な <code>.</code> という箱に結果を入れて、次の処理へ渡す</span> と考えるとわかりやすいです。
+        </div>
+        <div class="r-console">
+          <div class="r-topbar"><div class="r-dots"><div class="r-dot" style="background:#ef4444"></div><div class="r-dot" style="background:#f59e0b"></div><div class="r-dot" style="background:#22c55e"></div></div><div class="r-title">R — lexical transformation idea</div></div>
+          <div class="r-body">my_pipe &lt;- function(.) {
+  . &lt;- hop(., through = forest)
+  . &lt;- scoop(., up = field_mice)
+  bop(., on = head)
+}
+
+my_pipe(foo_foo)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-wrap">
+      <div class="step-line"><div class="num" style="background:var(--red-light);color:var(--red)">④</div><div class="vline"></div></div>
+      <div class="step-box">
+        <div class="step-title" style="color:var(--red)">🚫 Pipeを使わない方がよい場面</div>
+        <div class="step-desc">
+          Pipeは万能ではありません。<strong>短く、直線的に、1つの主役オブジェクトが変化する処理</strong>に向いています。逆に、複雑な依存関係や複数入力には不向きです。
+        </div>
+        <div class="branch">
+          <div class="branch-cell b-green"><div class="branch-lbl">Use pipe</div><div class="branch-val">1つのデータフレームに対して、filter → mutate → summarize のように順番に変換する。</div></div>
+          <div class="branch-cell b-red"><div class="branch-lbl">Avoid pipe</div><div class="branch-val">10ステップ以上、途中結果を頻繁に確認したい、複数のデータを複雑に組み合わせる。</div></div>
+        </div>
+        <div class="note-box" style="border-left:4px solid var(--red)">
+          <div class="note-title" style="color:var(--red)">⚠ 特に注意：環境とlazy evaluation</div>
+          <div class="note-text"><code>assign()</code>, <code>get()</code>, <code>load()</code> のように現在の環境を使う関数や、<code>tryCatch()</code>, <code>suppressMessages()</code> のように遅延評価に依存する関数は、pipeと相性が悪いことがあります。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-wrap">
+      <div class="step-line"><div class="num" style="background:var(--purple-light);color:var(--purple)">⑤</div><div class="vline"></div></div>
+      <div class="step-box">
+        <div class="step-title" style="color:var(--purple)">🧰 magrittrの便利な派生pipe</div>
+        <div class="step-desc">通常の <code>%&gt;%</code> 以外にも、magrittrには便利なpipeがあります。ただし、<code>%&lt;&gt;%</code> は代入が見えにくくなるので、学習段階では使いすぎ注意です。</div>
+        <table class="compare-table">
+          <tr><th>Operator</th><th>名前</th><th>何をするか</th><th>例</th></tr>
+          <tr class="b-blue"><td class="mono">%&gt;%</td><td>pipe</td><td>左の結果を右の関数へ渡す</td><td><code>x %&gt;% mean()</code></td></tr>
+          <tr class="b-green"><td class="mono">%T&gt;%</td><td>tee pipe</td><td>右側を実行するが、左側をそのまま返す</td><td><code>x %T&gt;% plot() %&gt;% str()</code></td></tr>
+          <tr class="b-amber"><td class="mono">%$%</td><td>exposition pipe</td><td>データフレーム内の列名を直接使える</td><td><code>mtcars %$% cor(disp, mpg)</code></td></tr>
+          <tr class="b-red"><td class="mono">%&lt;&gt;%</td><td>assignment pipe</td><td>結果を左辺に上書き代入する</td><td><code>mtcars %&lt;&gt;% transform(...)</code></td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="mcq-block" id="quiz14">
+      <div class="mcq-header"><span class="mcq-header-title">📝 Chapter 14 クイズ — Pipes</span><span class="mcq-score-badge" id="score14">0 / 5</span></div>
+      <div class="mcq-body">
+        <div class="mcq-q"><div class="mcq-qnum">Q1</div><div class="mcq-qtext"><code>%&gt;%</code> の主な目的はどれか？</div><div class="mcq-opts"><button class="mcq-opt" onclick="check(this,'wrong','14-1')"><span class="opt-label">A</span> Rの計算速度を必ず上げる</button><button class="mcq-opt" onclick="check(this,'correct','14-1')"><span class="opt-label">B</span> 複数処理の流れを読みやすくする</button><button class="mcq-opt" onclick="check(this,'wrong','14-1')"><span class="opt-label">C</span> すべての関数を自動で並列処理する</button><button class="mcq-opt" onclick="check(this,'wrong','14-1')"><span class="opt-label">D</span> NAを自動で消す</button></div><div class="mcq-fb fb-ok" id="fb-14-1-ok">✅ 正解。pipeの目的は、処理の流れを人間が読みやすくすることです。</div><div class="mcq-fb fb-ng" id="fb-14-1-ng">❌ pipeは速度改善やNA処理の道具ではありません。主目的は可読性です。</div></div>
+        <div class="mcq-q"><div class="mcq-qnum">Q2</div><div class="mcq-qtext">関数合成 <code>bop(scoop(hop(x)))</code> の弱点は？</div><div class="mcq-opts"><button class="mcq-opt" onclick="check(this,'wrong','14-2')"><span class="opt-label">A</span> Rでは実行できない</button><button class="mcq-opt" onclick="check(this,'correct','14-2')"><span class="opt-label">B</span> 内側から外側へ読む必要があり、人間には読みにくい</button><button class="mcq-opt" onclick="check(this,'wrong','14-2')"><span class="opt-label">C</span> 変数名が使えない</button><button class="mcq-opt" onclick="check(this,'wrong','14-2')"><span class="opt-label">D</span> 必ずメモリを大量消費する</button></div><div class="mcq-fb fb-ok" id="fb-14-2-ok">✅ 正解。関数合成はコンピュータには正しいですが、人間は内側から読む必要があります。</div><div class="mcq-fb fb-ng" id="fb-14-2-ng">❌ 弱点は「読む方向」です。処理の順番が直感的に見えません。</div></div>
+        <div class="mcq-q"><div class="mcq-qnum">Q3</div><div class="mcq-qtext">pipeを避けた方がよいケースはどれか？</div><div class="mcq-opts"><button class="mcq-opt" onclick="check(this,'wrong','14-3')"><span class="opt-label">A</span> 3ステップ程度の直線的処理</button><button class="mcq-opt" onclick="check(this,'wrong','14-3')"><span class="opt-label">B</span> 1つのデータフレームを順番に変換する処理</button><button class="mcq-opt" onclick="check(this,'correct','14-3')"><span class="opt-label">C</span> 10ステップ以上で途中確認が必要な処理</button><button class="mcq-opt" onclick="check(this,'wrong','14-3')"><span class="opt-label">D</span> filter()のあとmutate()する処理</button></div><div class="mcq-fb fb-ok" id="fb-14-3-ok">✅ 正解。長すぎるpipeは、意味のある中間オブジェクトに分けた方が読みやすくデバッグしやすいです。</div><div class="mcq-fb fb-ng" id="fb-14-3-ng">❌ pipeは短い直線的な処理に向いています。長すぎる場合は分けましょう。</div></div>
+        <div class="mcq-q"><div class="mcq-qnum">Q4</div><div class="mcq-qtext"><code>%T&gt;%</code> の特徴はどれか？</div><div class="mcq-opts"><button class="mcq-opt" onclick="check(this,'correct','14-4')"><span class="opt-label">A</span> 右側を実行しつつ、左側の値を返す</button><button class="mcq-opt" onclick="check(this,'wrong','14-4')"><span class="opt-label">B</span> 左側を完全に削除する</button><button class="mcq-opt" onclick="check(this,'wrong','14-4')"><span class="opt-label">C</span> 関数を定義する</button><button class="mcq-opt" onclick="check(this,'wrong','14-4')"><span class="opt-label">D</span> ベクトルをfactorに変換する</button></div><div class="mcq-fb fb-ok" id="fb-14-4-ok">✅ 正解。plot()など副作用だけ欲しい処理をpipeの途中に入れるとき便利です。</div><div class="mcq-fb fb-ng" id="fb-14-4-ng">❌ %T&gt;% はtee pipeです。右側を実行しても、返すのは左側です。</div></div>
+        <div class="mcq-q"><div class="mcq-qnum">Q5</div><div class="mcq-qtext"><code>%$%</code> が便利な場面は？</div><div class="mcq-opts"><button class="mcq-opt" onclick="check(this,'wrong','14-5')"><span class="opt-label">A</span> HTMLを作るとき</button><button class="mcq-opt" onclick="check(this,'correct','14-5')"><span class="opt-label">B</span> データフレーム内の列を、base R関数に直接渡したいとき</button><button class="mcq-opt" onclick="check(this,'wrong','14-5')"><span class="opt-label">C</span> 関数を自動で短くするとき</button><button class="mcq-opt" onclick="check(this,'wrong','14-5')"><span class="opt-label">D</span> CSVを自動保存するとき</button></div><div class="mcq-fb fb-ok" id="fb-14-5-ok">✅ 正解。例：<code>mtcars %$% cor(disp, mpg)</code> のように列名を直接使えます。</div><div class="mcq-fb fb-ng" id="fb-14-5-ng">❌ %$% はデータフレームの列を「展開」して使うためのpipeです。</div></div>
+      </div>
+      <div class="mcq-progress"><div class="mcq-progress-bar" id="prog14" style="width:0%"></div></div>
+    </div>
+  </div>
+  <div class="unit-terms">
+    <div class="unit-terms-hd">📝 Ch14 Terms</div>
+    <div class="ut-item"><div class="ut-sym" style="color:var(--blue)">%&gt;%</div><div class="ut-ja">pipe</div><div class="ut-en">then</div><div class="ut-def">左側の結果を次の関数へ渡す</div></div>
+    <div class="ut-item"><div class="ut-sym">composition</div><div class="ut-ja">関数合成</div><div class="ut-en">nested functions</div><div class="ut-def">関数の中に関数を入れる書き方</div></div>
+    <div class="ut-item"><div class="ut-sym" style="color:var(--green)">%T&gt;%</div><div class="ut-ja">tee pipe</div><div class="ut-en">side-effect pipe</div><div class="ut-def">右を実行し、左を返す</div></div>
+    <div class="ut-item"><div class="ut-sym" style="color:var(--amber)">%$%</div><div class="ut-ja">列展開</div><div class="ut-en">exposition</div><div class="ut-def">データフレームの列名を直接使う</div></div>
+    <div class="ut-item"><div class="ut-sym" style="color:var(--red)">%&lt;&gt;%</div><div class="ut-ja">代入pipe</div><div class="ut-en">assignment pipe</div><div class="ut-def">便利だが代入が見えにくい</div></div>
+  </div>
+</div>
+<div class="div"></div>
+
+<!-- ============================================================ CH15 ============================================================ -->
+<div id="ch15" class="sec">Chapter 15 — Functions / 関数</div>
+<div class="unit-wrap">
+  <div class="flow">
+    <div class="step-wrap">
+      <div class="step-line"><div class="num" style="background:var(--green-light);color:var(--green)">①</div><div class="vline"></div></div>
+      <div class="step-box">
+        <div class="step-title" style="color:var(--green)">♻️ 関数を書く理由：copy-and-pasteを卒業する</div>
+        <div class="step-desc">
+          同じコードを何度もコピーすると、変数名の変更忘れなどの小さなミスが起きます。Chapter 15の中心は、<span class="hl-s">3回同じようなコードを書いたら関数化を考える</span> という実践ルールです。
+        </div>
+        <div class="r-console">
+          <div class="r-topbar"><div class="r-dots"><div class="r-dot" style="background:#ef4444"></div><div class="r-dot" style="background:#f59e0b"></div><div class="r-dot" style="background:#22c55e"></div></div><div class="r-title">R — Copy-paste mistake</div></div>
+          <div class="r-body"><span class="r-gray"># df$b の分母で min(df$a) を使ってしまっている</span>
+df$b &lt;- (df$b - min(df$b, na.rm = TRUE)) /
+  (max(df$b, na.rm = TRUE) - min(df$a, na.rm = TRUE))
+
+<span class="r-gray"># 関数化すれば、この種類のミスを減らせる</span>
+rescale01 &lt;- function(x) {
+  rng &lt;- range(x, na.rm = TRUE)
+  (x - rng[1]) / (rng[2] - rng[1])
+}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-wrap">
+      <div class="step-line"><div class="num" style="background:var(--blue-light);color:var(--blue)">②</div><div class="vline"></div></div>
+      <div class="step-box">
+        <div class="step-title" style="color:var(--blue)">🧪 関数化の手順：動くコード → 一般化 → 関数化</div>
+        <div class="step-desc">良い関数は、いきなり頭の中で完成させるものではありません。まず具体例でコードを動かし、入力を一般名に置き換え、重複を整理してから関数にします。</div>
+        <div class="grid3">
+          <div class="card b-blue"><div class="card-label">Step 1</div><div class="card-val">具体例で動かす</div><div class="card-sub"><code>df$a</code> など、実データで処理を確認する</div></div>
+          <div class="card b-green"><div class="card-label">Step 2</div><div class="card-val">入力を一般名に</div><div class="card-sub"><code>x &lt;- df$a</code> として処理の本質を見る</div></div>
+          <div class="card b-purple"><div class="card-label">Step 3</div><div class="card-val">関数に包む</div><div class="card-sub"><code>function(x) { ... }</code> で再利用可能にする</div></div>
+        </div>
+        <div class="r-console">
+          <div class="r-topbar"><div class="r-dots"><div class="r-dot" style="background:#ef4444"></div><div class="r-dot" style="background:#f59e0b"></div><div class="r-dot" style="background:#22c55e"></div></div><div class="r-title">R — rescale01()</div></div>
+          <div class="r-body">rescale01 &lt;- function(x) {
+  rng &lt;- range(x, na.rm = TRUE)
+  (x - rng[1]) / (rng[2] - rng[1])
+}
+
+rescale01(c(-10, 0, 10))
+<span class="r-green">#&gt; [1] 0.0 0.5 1.0</span>
+
+rescale01(c(1, 2, 3, NA, 5))
+<span class="r-green">#&gt; [1] 0.00 0.25 0.50   NA 1.00</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-wrap">
+      <div class="step-line"><div class="num" style="background:var(--amber-light);color:var(--amber)">③</div><div class="vline"></div></div>
+      <div class="step-box">
+        <div class="step-title" style="color:var(--amber)">✍️ 人間が読める関数名・コメント・スタイル</div>
+        <div class="step-desc">
+          関数はコンピュータのためだけではありません。人間が「何をする関数か」を理解できる名前にします。基本は、<span class="hl">関数名は動詞、引数名は名詞</span>です。複数語は <code>snake_case</code> で統一します。
+        </div>
+        <table class="compare-table">
+          <tr><th>悪い例</th><th>良い例</th><th>理由</th></tr>
+          <tr><td class="mono">f()</td><td class="mono">rescale01()</td><td>短すぎる名前は意味が伝わらない</td></tr>
+          <tr><td class="mono">my_awesome_function()</td><td class="mono">impute_missing()</td><td>何をするのかが名前からわかる</td></tr>
+          <tr><td class="mono">rowMaxes()</td><td class="mono">row_maxes()</td><td>命名スタイルを統一する</td></tr>
+        </table>
+        <div class="note-box" style="border-left:4px solid var(--blue)">
+          <div class="note-title" style="color:var(--blue)">コメントは「what」より「why」</div>
+          <div class="note-text">コードを読めば何をしているか分かるのが理想です。コメントでは「なぜこの方法を選んだのか」「他に試した方法はなぜ使わなかったのか」を残すと、未来の自分に役立ちます。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-wrap">
+      <div class="step-line"><div class="num" style="background:var(--purple-light);color:var(--purple)">④</div><div class="vline"></div></div>
+      <div class="step-box">
+        <div class="step-title" style="color:var(--purple)">🔀 条件分岐：<code>if</code>, <code>else</code>, <code>switch()</code></div>
+        <div class="step-desc">関数の中では、入力に応じて処理を変える必要があります。<code>if</code> は必ず <strong>長さ1のTRUE/FALSE</strong> を期待します。複数条件が長くなる場合は、関数を分けるか <code>switch()</code> を検討します。</div>
+        <div class="r-console">
+          <div class="r-topbar"><div class="r-dots"><div class="r-dot" style="background:#ef4444"></div><div class="r-dot" style="background:#f59e0b"></div><div class="r-dot" style="background:#22c55e"></div></div><div class="r-title">R — conditional execution</div></div>
+          <div class="r-body">greeting &lt;- function(time) {
+  if (time &lt; 12) {
+    "Good morning"
+  } else if (time &lt; 18) {
+    "Good afternoon"
+  } else {
+    "Good evening"
+  }
+}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-wrap">
+      <div class="step-line"><div class="num" style="background:var(--red-light);color:var(--red)">⑤</div><div class="vline"></div></div>
+      <div class="step-box">
+        <div class="step-title" style="color:var(--red)">🎯 引数・戻り値・pipeable function</div>
+        <div class="step-desc">
+          関数を使いやすくするには、引数名・デフォルト値・戻り値を明確にします。Rでは通常、<strong>最後に評価された値</strong>が戻り値になります。pipeで使える関数にしたい場合は、主役データを第1引数に置くのが基本です。
+        </div>
+        <div class="branch">
+          <div class="branch-cell b-green"><div class="branch-lbl">Transformation function</div><div class="branch-val">入力を受け取り、変換したオブジェクトを返す。pipeに向く。例：<code>filter()</code>, <code>mutate()</code></div></div>
+          <div class="branch-cell b-amber"><div class="branch-lbl">Side-effect function</div><div class="branch-val">表示・保存・プロットなど、何かを実行することが主目的。戻り値は重要でない場合が多い。</div></div>
+        </div>
+        <div class="kids-box"><div class="kids-title">🌟 小学生でもわかる！</div><div class="kids-text">関数は「自動販売機」です。お金や番号が <strong>引数</strong>、出てくる飲み物が <strong>戻り値</strong>。pipeでつなげるなら、飲み物が次の機械にそのまま渡せる形だと便利です。</div></div>
+      </div>
+    </div>
+
+    <div class="mcq-block" id="quiz15">
+      <div class="mcq-header"><span class="mcq-header-title">📝 Chapter 15 クイズ — Functions</span><span class="mcq-score-badge" id="score15">0 / 5</span></div>
+      <div class="mcq-body">
+        <div class="mcq-q"><div class="mcq-qnum">Q1</div><div class="mcq-qtext">関数化を考える目安として正しいものは？</div><div class="mcq-opts"><button class="mcq-opt" onclick="check(this,'wrong','15-1')"><span class="opt-label">A</span> 1回でもコードを書いたら必ず関数化</button><button class="mcq-opt" onclick="check(this,'correct','15-1')"><span class="opt-label">B</span> 同じようなコードを3回書いたら関数化を考える</button><button class="mcq-opt" onclick="check(this,'wrong','15-1')"><span class="opt-label">C</span> 関数は上級者だけが使う</button><button class="mcq-opt" onclick="check(this,'wrong','15-1')"><span class="opt-label">D</span> dplyrを使うなら関数は不要</button></div><div class="mcq-fb fb-ok" id="fb-15-1-ok">✅ 正解。コピーが3つになったら、関数にして重複を減らすことを考えます。</div><div class="mcq-fb fb-ng" id="fb-15-1-ng">❌ 目安は「同じようなコードを3回」です。DRYの実践です。</div></div>
+        <div class="mcq-q"><div class="mcq-qnum">Q2</div><div class="mcq-qtext"><code>rescale01()</code> のような関数を作るとき、最初にするべきことは？</div><div class="mcq-opts"><button class="mcq-opt" onclick="check(this,'correct','15-2')"><span class="opt-label">A</span> まず具体的な入力で動くコードを書く</button><button class="mcq-opt" onclick="check(this,'wrong','15-2')"><span class="opt-label">B</span> 最初から完全な関数を書こうとする</button><button class="mcq-opt" onclick="check(this,'wrong','15-2')"><span class="opt-label">C</span> コメントだけを書く</button><button class="mcq-opt" onclick="check(this,'wrong','15-2')"><span class="opt-label">D</span> エラーを無視する</button></div><div class="mcq-fb fb-ok" id="fb-15-2-ok">✅ 正解。まず具体例で動かし、その後で一般化して関数にします。</div><div class="mcq-fb fb-ng" id="fb-15-2-ng">❌ いきなり関数を書くより、まず動くコードを作るのが安全です。</div></div>
+        <div class="mcq-q"><div class="mcq-qnum">Q3</div><div class="mcq-qtext">よい関数名の考え方として正しいものは？</div><div class="mcq-opts"><button class="mcq-opt" onclick="check(this,'wrong','15-3')"><span class="opt-label">A</span> できるだけ1文字にする</button><button class="mcq-opt" onclick="check(this,'correct','15-3')"><span class="opt-label">B</span> 短くても、何をするかがわかる名前にする</button><button class="mcq-opt" onclick="check(this,'wrong','15-3')"><span class="opt-label">C</span> 毎回違う命名スタイルにする</button><button class="mcq-opt" onclick="check(this,'wrong','15-3')"><span class="opt-label">D</span> 既存のbase R関数名を上書きする</button></div><div class="mcq-fb fb-ok" id="fb-15-3-ok">✅ 正解。関数名は人間への説明です。明確さが最優先です。</div><div class="mcq-fb fb-ng" id="fb-15-3-ng">❌ 名前は人間が読むためのものです。意味が伝わる名前にしましょう。</div></div>
+        <div class="mcq-q"><div class="mcq-qnum">Q4</div><div class="mcq-qtext">コメントで特に残すべき内容は？</div><div class="mcq-opts"><button class="mcq-opt" onclick="check(this,'wrong','15-4')"><span class="opt-label">A</span> コードをそのまま英語にした説明</button><button class="mcq-opt" onclick="check(this,'correct','15-4')"><span class="opt-label">B</span> なぜその方法を選んだのか</button><button class="mcq-opt" onclick="check(this,'wrong','15-4')"><span class="opt-label">C</span> すべての行に同じコメント</button><button class="mcq-opt" onclick="check(this,'wrong','15-4')"><span class="opt-label">D</span> 関数名と同じ内容</button></div><div class="mcq-fb fb-ok" id="fb-15-4-ok">✅ 正解。what/howはコードで示し、whyをコメントで残すのが効果的です。</div><div class="mcq-fb fb-ng" id="fb-15-4-ng">❌ コメントは「なぜ」を残すと、未来の自分に役立ちます。</div></div>
+        <div class="mcq-q"><div class="mcq-qnum">Q5</div><div class="mcq-qtext">pipeable functionにしやすい設計は？</div><div class="mcq-opts"><button class="mcq-opt" onclick="check(this,'correct','15-5')"><span class="opt-label">A</span> 主役のデータを第1引数にする</button><button class="mcq-opt" onclick="check(this,'wrong','15-5')"><span class="opt-label">B</span> 戻り値を必ずNULLにする</button><button class="mcq-opt" onclick="check(this,'wrong','15-5')"><span class="opt-label">C</span> 引数名をすべて1文字にする</button><button class="mcq-opt" onclick="check(this,'wrong','15-5')"><span class="opt-label">D</span> 関数の中で必ずassign()を使う</button></div><div class="mcq-fb fb-ok" id="fb-15-5-ok">✅ 正解。pipeは左側の値を右側の第1引数に渡すので、主役データを第1引数に置くと使いやすいです。</div><div class="mcq-fb fb-ng" id="fb-15-5-ng">❌ pipeで使うなら、第1引数に主役データを置くのが基本です。</div></div>
+      </div>
+      <div class="mcq-progress"><div class="mcq-progress-bar" id="prog15" style="width:0%"></div></div>
+    </div>
+  </div>
+  <div class="unit-terms">
+    <div class="unit-terms-hd">📝 Ch15 Terms</div>
+    <div class="ut-item"><div class="ut-sym" style="color:var(--green)">function()</div><div class="ut-ja">関数定義</div><div class="ut-en">function definition</div><div class="ut-def">入力を受け取り、処理して値を返す</div></div>
+    <div class="ut-item"><div class="ut-sym">argument</div><div class="ut-ja">引数</div><div class="ut-en">input</div><div class="ut-def">関数に渡す材料</div></div>
+    <div class="ut-item"><div class="ut-sym" style="color:var(--red)">DRY</div><div class="ut-ja">重複排除</div><div class="ut-en">Don't Repeat Yourself</div><div class="ut-def">変更箇所を1つにまとめる考え方</div></div>
+    <div class="ut-item"><div class="ut-sym" style="color:var(--amber)">if / else</div><div class="ut-ja">条件分岐</div><div class="ut-en">conditional</div><div class="ut-def">入力に応じて処理を変える</div></div>
+    <div class="ut-item"><div class="ut-sym" style="color:var(--purple)">return value</div><div class="ut-ja">戻り値</div><div class="ut-en">output</div><div class="ut-def">関数が最後に返す結果</div></div>
+  </div>
+</div>
+<div class="div"></div>
+
+<!-- ============================================================ CH16 ============================================================ -->
+<div id="ch16" class="sec">Chapter 16 — Vectors / ベクトル</div>
+<div class="unit-wrap">
+  <div class="flow">
+    <div class="step-wrap">
+      <div class="step-line"><div class="num" style="background:var(--purple-light);color:var(--purple)">①</div><div class="vline"></div></div>
+      <div class="step-box">
+        <div class="step-title" style="color:var(--purple)">🧬 Rの中心：すべてはvectorから始まる</div>
+        <div class="step-desc">
+          Chapter 16では、Rのデータ構造を学びます。Rで扱う多くのものはvectorに基づいています。大きく分けると、<span class="hl-s">atomic vector</span> と <span class="hl-s">list</span> があります。
+        </div>
+        <div class="branch">
+          <div class="branch-cell b-blue"><div class="branch-lbl">Atomic vector</div><div class="branch-val">すべての要素が同じ型。例：logical, integer, double, character。</div></div>
+          <div class="branch-cell b-purple"><div class="branch-lbl">List</div><div class="branch-val">要素ごとに型が違ってもよい。データフレームやtibbleの土台にもなる。</div></div>
+        </div>
+        <div class="r-console">
+          <div class="r-topbar"><div class="r-dots"><div class="r-dot" style="background:#ef4444"></div><div class="r-dot" style="background:#f59e0b"></div><div class="r-dot" style="background:#22c55e"></div></div><div class="r-title">R — vector basics</div></div>
+          <div class="r-body">typeof(c(TRUE, FALSE))
+<span class="r-green">#&gt; [1] "logical"</span>
+
+typeof(c(1L, 2L, 3L))
+<span class="r-green">#&gt; [1] "integer"</span>
+
+typeof(c(1.5, 2.5))
+<span class="r-green">#&gt; [1] "double"</span>
+
+typeof(c("a", "b"))
+<span class="r-green">#&gt; [1] "character"</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-wrap">
+      <div class="step-line"><div class="num" style="background:var(--blue-light);color:var(--blue)">②</div><div class="vline"></div></div>
+      <div class="step-box">
+        <div class="step-title" style="color:var(--blue)">🔢 4つの重要なatomic vector</div>
+        <div class="step-desc">まずは4種類を確実に区別します。特に <code>integer</code> と <code>double</code> はどちらも数値に見えるので注意が必要です。</div>
+        <table class="compare-table">
+          <tr><th>型</th><th>例</th><th>意味</th><th>よくある用途</th></tr>
+          <tr class="b-green"><td class="mono">logical</td><td><code>TRUE</code>, <code>FALSE</code></td><td>真偽値</td><td>条件、filter、比較結果</td></tr>
+          <tr class="b-blue"><td class="mono">integer</td><td><code>1L</code>, <code>2L</code></td><td>整数</td><td>カウント、index</td></tr>
+          <tr class="b-amber"><td class="mono">double</td><td><code>1.5</code>, <code>pi</code></td><td>小数を含む数値</td><td>測定値、平均、標準偏差</td></tr>
+          <tr class="b-purple"><td class="mono">character</td><td><code>"Bangkok"</code></td><td>文字列</td><td>名前、カテゴリ、ラベル</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="step-wrap">
+      <div class="step-line"><div class="num" style="background:var(--amber-light);color:var(--amber)">③</div><div class="vline"></div></div>
+      <div class="step-box">
+        <div class="step-title" style="color:var(--amber)">⚠️ Coercion / 型変換：混ぜると1つの型にそろえられる</div>
+        <div class="step-desc">
+          Atomic vectorは1つの型しか持てません。違う型を混ぜると、Rが自動的に1つの型へ変換します。これは便利ですが、予想外の結果の原因にもなります。
+        </div>
+        <div class="r-console">
+          <div class="r-topbar"><div class="r-dots"><div class="r-dot" style="background:#ef4444"></div><div class="r-dot" style="background:#f59e0b"></div><div class="r-dot" style="background:#22c55e"></div></div><div class="r-title">R — coercion</div></div>
+          <div class="r-body">str(c(FALSE, 1L, 2.5, "three"))
+<span class="r-green">#&gt; chr [1:4] "FALSE" "1" "2.5" "three"</span>
+
+as.numeric(c("1", "2", "oops"))
+<span class="r-yellow">#&gt; Warning: NAs introduced by coercion</span>
+<span class="r-green">#&gt; [1]  1  2 NA</span></div>
+        </div>
+        <div class="note-box" style="border-left:4px solid var(--amber)"><div class="note-title" style="color:var(--amber)">変換の強さのイメージ</div><div class="note-text"><code>logical → integer → double → character</code> の順に、より多くの情報を表せる型へ寄せられます。文字列が混ざると、全部characterになりやすいです。</div></div>
+      </div>
+    </div>
+
+    <div class="step-wrap">
+      <div class="step-line"><div class="num" style="background:var(--teal-light);color:var(--teal)">④</div><div class="vline"></div></div>
+      <div class="step-box">
+        <div class="step-title" style="color:var(--teal)">📏 Recycling rules / 長さの違うvectorをどう扱うか</div>
+        <div class="step-desc">
+          Rでは、長さの短いvectorが長いvectorに合わせて繰り返されることがあります。これを <span class="hl-s">recycling</span> と呼びます。便利ですが、意図しない繰り返しに注意が必要です。
+        </div>
+        <div class="r-console">
+          <div class="r-topbar"><div class="r-dots"><div class="r-dot" style="background:#ef4444"></div><div class="r-dot" style="background:#f59e0b"></div><div class="r-dot" style="background:#22c55e"></div></div><div class="r-title">R — recycling</div></div>
+          <div class="r-body">1:6 + 10
+<span class="r-green">#&gt; [1] 11 12 13 14 15 16</span>
+
+1:6 + c(10, 20)
+<span class="r-green">#&gt; [1] 11 22 13 24 15 26</span>
+
+1:6 + c(10, 20, 30, 40)
+<span class="r-yellow">#&gt; Warning: longer object length is not a multiple of shorter object length</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-wrap">
+      <div class="step-line"><div class="num" style="background:var(--green-light);color:var(--green)">⑤</div><div class="vline"></div></div>
+      <div class="step-box">
+        <div class="step-title" style="color:var(--green)">🔎 Subsetting / 必要な要素を取り出す</div>
+        <div class="step-desc">
+          vectorから要素を取り出す方法は複数あります。positive integer、negative integer、logical、character namesの違いを押さえると、データ操作のエラーが減ります。
+        </div>
+        <table class="compare-table">
+          <tr><th>方法</th><th>例</th><th>意味</th></tr>
+          <tr class="b-blue"><td class="mono">positive integer</td><td><code>x[c(1, 3)]</code></td><td>1番目と3番目を残す</td></tr>
+          <tr class="b-red"><td class="mono">negative integer</td><td><code>x[-2]</code></td><td>2番目を除く</td></tr>
+          <tr class="b-green"><td class="mono">logical</td><td><code>x[x &gt; 0]</code></td><td>条件がTRUEのものだけ残す</td></tr>
+          <tr class="b-purple"><td class="mono">character</td><td><code>x[c("a", "b")]</code></td><td>名前で取り出す</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="step-wrap">
+      <div class="step-line"><div class="num" style="background:var(--red-light);color:var(--red)">⑥</div><div class="vline"></div></div>
+      <div class="step-box">
+        <div class="step-title" style="color:var(--red)">🏷 Attributes, S3 class, augmented vectors</div>
+        <div class="step-desc">
+          Rのvectorには属性（attributes）を付けられます。特に <code>names</code>, <code>dim</code>, <code>class</code> は重要です。factor、date、date-time、tibbleは、基本vectorにclassなどの属性を加えた <span class="hl-s">augmented vectors</span> として理解できます。
+        </div>
+        <div class="grid2">
+          <div class="card b-amber"><div class="card-label">Factor</div><div class="card-val">カテゴリ + levels</div><div class="card-sub">内部的にはintegerにlevels属性が付いたもの。順序やカテゴリ管理に使う。</div></div>
+          <div class="card b-blue"><div class="card-label">Date / POSIXct</div><div class="card-val">数値 + class</div><div class="card-sub">Dateは1970-01-01からの日数、POSIXctは秒数を表す。</div></div>
+          <div class="card b-purple"><div class="card-label">Tibble</div><div class="card-val">list + data.frame class</div><div class="card-sub">各列は同じ長さのvector。listを拡張した構造。</div></div>
+          <div class="card b-green"><div class="card-label">S3</div><div class="card-val">classで振る舞いを変える</div><div class="card-sub"><code>print()</code>などの総称関数がclassに応じて動く。</div></div>
+        </div>
+        <div class="kids-box"><div class="kids-title">🌟 小学生でもわかる！</div><div class="kids-text">vectorは「同じ種類の箱が横に並んだもの」。listは「いろいろな箱を入れられる大きな箱」。tibbleは「同じ長さの箱の列を、表みたいに並べたもの」です。</div></div>
+      </div>
+    </div>
+
+    <div class="mcq-block" id="quiz16">
+      <div class="mcq-header"><span class="mcq-header-title">📝 Chapter 16 クイズ — Vectors</span><span class="mcq-score-badge" id="score16">0 / 5</span></div>
+      <div class="mcq-body">
+        <div class="mcq-q"><div class="mcq-qnum">Q1</div><div class="mcq-qtext">atomic vectorの特徴は？</div><div class="mcq-opts"><button class="mcq-opt" onclick="check(this,'correct','16-1')"><span class="opt-label">A</span> すべての要素が同じ型である</button><button class="mcq-opt" onclick="check(this,'wrong','16-1')"><span class="opt-label">B</span> すべての要素がlistである</button><button class="mcq-opt" onclick="check(this,'wrong','16-1')"><span class="opt-label">C</span> 必ず文字列である</button><button class="mcq-opt" onclick="check(this,'wrong','16-1')"><span class="opt-label">D</span> 必ず1つの値しか持てない</button></div><div class="mcq-fb fb-ok" id="fb-16-1-ok">✅ 正解。atomic vectorは同じ型の要素だけを持ちます。</div><div class="mcq-fb fb-ng" id="fb-16-1-ng">❌ atomic vectorは、要素の型がすべて同じです。</div></div>
+        <div class="mcq-q"><div class="mcq-qnum">Q2</div><div class="mcq-qtext"><code>c(TRUE, 1L, 2.5, "three")</code> の型はどうなりやすいか？</div><div class="mcq-opts"><button class="mcq-opt" onclick="check(this,'wrong','16-2')"><span class="opt-label">A</span> logical</button><button class="mcq-opt" onclick="check(this,'wrong','16-2')"><span class="opt-label">B</span> integer</button><button class="mcq-opt" onclick="check(this,'wrong','16-2')"><span class="opt-label">C</span> double</button><button class="mcq-opt" onclick="check(this,'correct','16-2')"><span class="opt-label">D</span> character</button></div><div class="mcq-fb fb-ok" id="fb-16-2-ok">✅ 正解。文字列が混ざると、全体がcharacterに変換されます。</div><div class="mcq-fb fb-ng" id="fb-16-2-ng">❌ characterが混ざると、Rは全部を文字列として扱います。</div></div>
+        <div class="mcq-q"><div class="mcq-qnum">Q3</div><div class="mcq-qtext">recycling ruleとは？</div><div class="mcq-opts"><button class="mcq-opt" onclick="check(this,'wrong','16-3')"><span class="opt-label">A</span> 使わない変数を自動削除する仕組み</button><button class="mcq-opt" onclick="check(this,'correct','16-3')"><span class="opt-label">B</span> 短いvectorを長いvectorに合わせて繰り返す仕組み</button><button class="mcq-opt" onclick="check(this,'wrong','16-3')"><span class="opt-label">C</span> characterをfactorにする仕組み</button><button class="mcq-opt" onclick="check(this,'wrong','16-3')"><span class="opt-label">D</span> NAを0にする仕組み</button></div><div class="mcq-fb fb-ok" id="fb-16-3-ok">✅ 正解。長さ1の値をvector全体に足せるのもrecyclingのおかげです。</div><div class="mcq-fb fb-ng" id="fb-16-3-ng">❌ recyclingは、短いvectorを繰り返して長さを合わせる規則です。</div></div>
+        <div class="mcq-q"><div class="mcq-qnum">Q4</div><div class="mcq-qtext"><code>x[-2]</code> の意味は？</div><div class="mcq-opts"><button class="mcq-opt" onclick="check(this,'wrong','16-4')"><span class="opt-label">A</span> 2番目だけを取り出す</button><button class="mcq-opt" onclick="check(this,'correct','16-4')"><span class="opt-label">B</span> 2番目を除外する</button><button class="mcq-opt" onclick="check(this,'wrong','16-4')"><span class="opt-label">C</span> 2倍する</button><button class="mcq-opt" onclick="check(this,'wrong','16-4')"><span class="opt-label">D</span> 2番目をNAにする</button></div><div class="mcq-fb fb-ok" id="fb-16-4-ok">✅ 正解。negative integer subsettingは、その位置を除外します。</div><div class="mcq-fb fb-ng" id="fb-16-4-ng">❌ <code>-2</code> は「2番目を除く」という意味です。</div></div>
+        <div class="mcq-q"><div class="mcq-qnum">Q5</div><div class="mcq-qtext">tibbleの構造として正しい説明は？</div><div class="mcq-opts"><button class="mcq-opt" onclick="check(this,'wrong','16-5')"><span class="opt-label">A</span> すべての列の長さが違ってよい</button><button class="mcq-opt" onclick="check(this,'wrong','16-5')"><span class="opt-label">B</span> tibbleは文字列vectorだけでできている</button><button class="mcq-opt" onclick="check(this,'correct','16-5')"><span class="opt-label">C</span> listを土台にし、各列は同じ長さのvectorである</button><button class="mcq-opt" onclick="check(this,'wrong','16-5')"><span class="opt-label">D</span> tibbleにはclass属性がない</button></div><div class="mcq-fb fb-ok" id="fb-16-5-ok">✅ 正解。tibbleはlistを土台にした表で、各列は同じ長さでなければいけません。</div><div class="mcq-fb fb-ng" id="fb-16-5-ng">❌ tibbleはlistを拡張した表です。各列は同じ長さのvectorです。</div></div>
+      </div>
+      <div class="mcq-progress"><div class="mcq-progress-bar" id="prog16" style="width:0%"></div></div>
+    </div>
+  </div>
+  <div class="unit-terms">
+    <div class="unit-terms-hd">📝 Ch16 Terms</div>
+    <div class="ut-item"><div class="ut-sym" style="color:var(--purple)">vector</div><div class="ut-ja">ベクトル</div><div class="ut-en">one-dimensional data</div><div class="ut-def">Rの基本的なデータ構造</div></div>
+    <div class="ut-item"><div class="ut-sym">atomic</div><div class="ut-ja">同一型</div><div class="ut-en">same type</div><div class="ut-def">全要素が同じ型のvector</div></div>
+    <div class="ut-item"><div class="ut-sym" style="color:var(--amber)">coercion</div><div class="ut-ja">型変換</div><div class="ut-en">type conversion</div><div class="ut-def">違う型を1つの型にそろえる</div></div>
+    <div class="ut-item"><div class="ut-sym" style="color:var(--teal)">recycling</div><div class="ut-ja">繰り返し規則</div><div class="ut-en">length matching</div><div class="ut-def">短いvectorを繰り返して長さを合わせる</div></div>
+    <div class="ut-item"><div class="ut-sym" style="color:var(--green)">list</div><div class="ut-ja">リスト</div><div class="ut-en">recursive vector</div><div class="ut-def">異なる型の要素を入れられる</div></div>
+    <div class="ut-item"><div class="ut-sym" style="color:var(--red)">class</div><div class="ut-ja">クラス</div><div class="ut-en">S3 behavior</div><div class="ut-def">同じ中身でも表示・動作を変える属性</div></div>
+  </div>
+</div>
+<div class="div"></div>
+
+<!-- ============================================================ CH17 PREVIEW ============================================================ -->
+<div id="ch17" class="sec">Chapter 17 Preview — Iteration / 反復処理</div>
+<div class="unit-wrap">
+  <div class="flow">
+    <div class="step-wrap">
+      <div class="step-line"><div class="num" style="background:var(--amber-light);color:var(--amber)">①</div><div class="vline"></div></div>
+      <div class="step-box">
+        <div class="step-title" style="color:var(--amber)">🔁 Functionsの次に必要になるもの：同じ処理を複数入力へ</div>
+        <div class="step-desc">
+          関数は「繰り返されるコード」を1つにまとめます。しかし実際の分析では、<strong>同じ関数をたくさんの列・ファイル・モデル・グループに適用したい</strong>場面が出てきます。そこで必要になるのがiterationです。
+        </div>
+        <div class="branch">
+          <div class="branch-cell b-green"><div class="branch-lbl">Function</div><div class="branch-val">1つの処理を名前付きの道具にする。例：<code>rescale01(x)</code></div></div>
+          <div class="branch-cell b-amber"><div class="branch-lbl">Iteration</div><div class="branch-val">その道具を複数の入力に何度も使う。例：すべての数値列をrescaleする。</div></div>
+        </div>
+        <div class="r-console">
+          <div class="r-topbar"><div class="r-dots"><div class="r-dot" style="background:#ef4444"></div><div class="r-dot" style="background:#f59e0b"></div><div class="r-dot" style="background:#22c55e"></div></div><div class="r-title">R — iteration idea</div></div>
+          <div class="r-body"><span class="r-gray"># Concept only: detailed Chapter 17 text was not in the attachment</span>
+cols &lt;- list(a = df$a, b = df$b, c = df$c)
+
+for (name in names(cols)) {
+  cols[[name]] &lt;- rescale01(cols[[name]])
+}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="unit-terms">
+    <div class="unit-terms-hd">📝 Preview Terms</div>
+    <div class="ut-item"><div class="ut-sym" style="color:var(--amber)">iteration</div><div class="ut-ja">反復処理</div><div class="ut-en">repeat actions</div><div class="ut-def">同じ処理を複数入力に適用する</div></div>
+    <div class="ut-item"><div class="ut-sym">for loop</div><div class="ut-ja">forループ</div><div class="ut-en">explicit iteration</div><div class="ut-def">順番に取り出して処理する</div></div>
+    <div class="ut-item"><div class="ut-sym">map</div><div class="ut-ja">関数型反復</div><div class="ut-en">functional programming</div><div class="ut-def">関数を複数の入力に適用する発想</div></div>
+  </div>
+</div>
+<div class="div"></div>
+
+<!-- ============================================================ FINAL QUIZ ============================================================ -->
+<div id="finalquiz" class="sec">Final Check — PART III 総まとめ</div>
+<div class="callout">
+  <div class="callout-title" style="color:var(--blue)">🎯 最終理解チェック</div>
+  <p>PART III全体の流れは、<strong>読みやすい処理の流れ（pipe）→ 再利用できる部品（function）→ Rのデータ構造（vector/list/tibble）→ 複数入力への反復（iteration）</strong>です。下のクイズで、概念のつながりを確認してください。</p>
+</div>
+
+<div class="mcq-block" id="quiz99">
+  <div class="mcq-header"><span class="mcq-header-title">🧠 Final Quiz — Program</span><span class="mcq-score-badge" id="score99">0 / 6</span></div>
+  <div class="mcq-body">
+    <div class="mcq-q"><div class="mcq-qnum">Q1</div><div class="mcq-qtext">PART III全体の中心メッセージとして最も近いものは？</div><div class="mcq-opts"><button class="mcq-opt" onclick="check(this,'wrong','99-1')"><span class="opt-label">A</span> コードは短ければ短いほど常に良い</button><button class="mcq-opt" onclick="check(this,'correct','99-1')"><span class="opt-label">B</span> コードはコンピュータと人間へのコミュニケーションである</button><button class="mcq-opt" onclick="check(this,'wrong','99-1')"><span class="opt-label">C</span> Rでは関数を使わない方がよい</button><button class="mcq-opt" onclick="check(this,'wrong','99-1')"><span class="opt-label">D</span> pipeだけ覚えれば十分</button></div><div class="mcq-fb fb-ok" id="fb-99-1-ok">✅ 正解。コードはコンピュータだけでなく、未来の自分や他者にも意味を伝えます。</div><div class="mcq-fb fb-ng" id="fb-99-1-ng">❌ 中心は「code as communication」です。</div></div>
+    <div class="mcq-q"><div class="mcq-qnum">Q2</div><div class="mcq-qtext">「まず動くコードを書き、あとで読みやすく書き直す」という考え方に最も近いものは？</div><div class="mcq-opts"><button class="mcq-opt" onclick="check(this,'correct','99-2')"><span class="opt-label">A</span> rewriting / refactoring</button><button class="mcq-opt" onclick="check(this,'wrong','99-2')"><span class="opt-label">B</span> recycling rule</button><button class="mcq-opt" onclick="check(this,'wrong','99-2')"><span class="opt-label">C</span> coercion</button><button class="mcq-opt" onclick="check(this,'wrong','99-2')"><span class="opt-label">D</span> lazy evaluation</button></div><div class="mcq-fb fb-ok" id="fb-99-2-ok">✅ 正解。書き直しは明確なコードを書くための重要なステップです。</div><div class="mcq-fb fb-ng" id="fb-99-2-ng">❌ この考え方はrewriting / refactoringです。</div></div>
+    <div class="mcq-q"><div class="mcq-qnum">Q3</div><div class="mcq-qtext">pipeとfunctionの関係として正しいものは？</div><div class="mcq-opts"><button class="mcq-opt" onclick="check(this,'wrong','99-3')"><span class="opt-label">A</span> pipeがあればfunctionは不要</button><button class="mcq-opt" onclick="check(this,'wrong','99-3')"><span class="opt-label">B</span> functionがあればvectorは不要</button><button class="mcq-opt" onclick="check(this,'correct','99-3')"><span class="opt-label">C</span> pipeは処理の流れを読みやすくし、functionは繰り返し処理を再利用可能にする</button><button class="mcq-opt" onclick="check(this,'wrong','99-3')"><span class="opt-label">D</span> pipeは関数を実行不能にする</button></div><div class="mcq-fb fb-ok" id="fb-99-3-ok">✅ 正解。pipeとfunctionは役割が違い、組み合わせると強力です。</div><div class="mcq-fb fb-ng" id="fb-99-3-ng">❌ pipeは流れ、functionは部品化です。</div></div>
+    <div class="mcq-q"><div class="mcq-qnum">Q4</div><div class="mcq-qtext">Rのvector理解が大事な理由は？</div><div class="mcq-opts"><button class="mcq-opt" onclick="check(this,'wrong','99-4')"><span class="opt-label">A</span> ggplotだけに必要だから</button><button class="mcq-opt" onclick="check(this,'correct','99-4')"><span class="opt-label">B</span> 多くのRオブジェクトや関数の動作がvectorを土台にしているから</button><button class="mcq-opt" onclick="check(this,'wrong','99-4')"><span class="opt-label">C</span> vectorはHTMLの要素だから</button><button class="mcq-opt" onclick="check(this,'wrong','99-4')"><span class="opt-label">D</span> vectorを使うと必ず機械学習ができるから</button></div><div class="mcq-fb fb-ok" id="fb-99-4-ok">✅ 正解。Rのデータ構造を理解する土台がvectorです。</div><div class="mcq-fb fb-ng" id="fb-99-4-ng">❌ vectorはR全体の土台です。</div></div>
+    <div class="mcq-q"><div class="mcq-qnum">Q5</div><div class="mcq-qtext">listとatomic vectorの大きな違いは？</div><div class="mcq-opts"><button class="mcq-opt" onclick="check(this,'wrong','99-5')"><span class="opt-label">A</span> listは必ず数値だけを持つ</button><button class="mcq-opt" onclick="check(this,'correct','99-5')"><span class="opt-label">B</span> listは要素ごとに違う型を持てる</button><button class="mcq-opt" onclick="check(this,'wrong','99-5')"><span class="opt-label">C</span> atomic vectorは存在しない</button><button class="mcq-opt" onclick="check(this,'wrong','99-5')"><span class="opt-label">D</span> listは常に1行の表である</button></div><div class="mcq-fb fb-ok" id="fb-99-5-ok">✅ 正解。listは異なる型の要素を入れられます。</div><div class="mcq-fb fb-ng" id="fb-99-5-ng">❌ atomic vectorは同じ型、listは違う型も持てます。</div></div>
+    <div class="mcq-q"><div class="mcq-qnum">Q6</div><div class="mcq-qtext">iterationが必要になる典型例は？</div><div class="mcq-opts"><button class="mcq-opt" onclick="check(this,'wrong','99-6')"><span class="opt-label">A</span> 1つの数値を一度だけ表示する</button><button class="mcq-opt" onclick="check(this,'correct','99-6')"><span class="opt-label">B</span> 同じ関数を複数の列やファイルに適用する</button><button class="mcq-opt" onclick="check(this,'wrong','99-6')"><span class="opt-label">C</span> 変数名を手で長くする</button><button class="mcq-opt" onclick="check(this,'wrong','99-6')"><span class="opt-label">D</span> pipeを完全に禁止する</button></div><div class="mcq-fb fb-ok" id="fb-99-6-ok">✅ 正解。iterationは同じ処理を複数入力に適用するための考え方です。</div><div class="mcq-fb fb-ng" id="fb-99-6-ng">❌ iterationは「同じことを複数入力に繰り返す」ために使います。</div></div>
+  </div>
+  <div class="mcq-progress"><div class="mcq-progress-bar" id="prog99" style="width:0%"></div></div>
+</div>
+
+<div class="footer">Created as a single-page study guide for PART III: Program. Use the navigation buttons at the top to jump between chapters.</div>
+
+<script>
+const answered = {};
+const totals = {14:5, 15:5, 16:5, 99:6};
+const scores = {14:0, 15:0, 16:0, 99:0};
+
+function check(btn, result, qid){
+  if(answered[qid]) return;
+  answered[qid] = true;
+  const unit = qid.split('-')[0];
+  const q = btn.closest('.mcq-q');
+  const buttons = q.querySelectorAll('.mcq-opt');
+  buttons.forEach(b => {
+    b.disabled = true;
+    if(b.getAttribute('onclick') && b.getAttribute('onclick').includes("'correct'")){
+      b.classList.add('reveal-correct');
+    }
+  });
+  const ok = document.getElementById('fb-' + qid + '-ok');
+  const ng = document.getElementById('fb-' + qid + '-ng');
+  if(result === 'correct'){
+    btn.classList.add('correct');
+    ok.classList.add('show');
+    scores[unit]++;
+  } else {
+    btn.classList.add('wrong');
+    ng.classList.add('show');
+  }
+  updateScore(unit);
+}
+
+function updateScore(unit){
+  const score = document.getElementById('score' + unit);
+  const prog = document.getElementById('prog' + unit);
+  const total = totals[unit];
+  if(score) score.textContent = scores[unit] + ' / ' + total;
+  if(prog) prog.style.width = ((scores[unit] / total) * 100) + '%';
+}
+</script>
+</body>
+</html>

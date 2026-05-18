@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>R for Data Science — Study Site</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blue:#4471B8;--blue-light:#E2EBF7;--green:#3C8A5A;--green-light:#E2F0EA;
+  --amber:#B87830;--amber-light:#F8F0E1;--red:#B84848;--red-light:#F7E2E2;
+  --purple:#7256AC;--purple-light:#ECEAF7;--teal:#2E7D8A;--teal-light:#E0F0F3;
+  --ink:#111827;--ink2:#374151;--muted:#6b7280;--border:#E2E2DE;--bg:#F6F6F3;--soft:#f3f4f6;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--ink);max-width:1120px;margin:0 auto;padding:34px 16px 80px;line-height:1.75}
+code{font-family:'JetBrains Mono',monospace;background:var(--soft);padding:2px 6px;border-radius:5px;font-size:12px}
+.hero{background:linear-gradient(135deg,#fff 0%,#f3f7ff 50%,#fff7ed 100%);border:1px solid var(--border);border-radius:20px;padding:26px 26px;margin-bottom:20px;box-shadow:0 14px 36px rgba(17,24,39,.06)}
+h1{font-size:30px;font-weight:900;letter-spacing:-.03em;margin-bottom:8px}
+.subtitle{font-size:13.5px;color:var(--muted);max-width:820px}
+.nav{position:sticky;top:0;z-index:10;background:rgba(246,246,243,.92);backdrop-filter:blur(8px);border:1px solid var(--border);border-radius:14px;padding:9px;margin:18px 0 22px;display:flex;gap:7px;flex-wrap:wrap}
+.nav a{text-decoration:none;color:var(--ink2);background:#fff;border:1px solid var(--border);border-radius:999px;padding:7px 12px;font-size:12px;font-weight:800}
+.nav a:hover{border-color:var(--blue);background:var(--blue-light);color:var(--blue)}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.card{display:block;text-decoration:none;color:inherit;background:#fff;border:1px solid var(--border);border-radius:18px;padding:18px;box-shadow:0 8px 22px rgba(17,24,39,.045);transition:.18s transform,.18s box-shadow,.18s border-color}
+.card:hover{transform:translateY(-2px);box-shadow:0 14px 30px rgba(17,24,39,.08);border-color:var(--blue)}
+.part{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.title{font-size:19px;font-weight:900;margin-bottom:6px}
+.desc{font-size:13px;color:var(--ink2);line-height:1.75}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+.tag{font-size:11px;font-weight:800;border-radius:999px;padding:3px 8px;border:1px solid var(--border);background:var(--soft);color:var(--ink2)}
+.blue{background:var(--blue-light);border-color:#A8C0E5}.green{background:var(--green-light);border-color:#7ACC96}.amber{background:var(--amber-light);border-color:#D4AA55}.purple{background:var(--purple-light);border-color:#BBAAE4}.red{background:var(--red-light);border-color:#E8A0A0}.teal{background:var(--teal-light);border-color:#9dd2da}
+.workflow{margin-top:18px;background:#fff;border:1px solid var(--border);border-radius:18px;padding:18px}
+.workflow h2{font-size:17px;margin-bottom:8px}.workflow ol{padding-left:22px;color:var(--ink2);font-size:13px}.workflow li{margin:6px 0}
+.footer{font-size:12px;color:var(--muted);text-align:center;margin-top:30px}
+@media(max-width:720px){.grid{grid-template-columns:1fr}h1{font-size:25px}.hero{padding:20px}}
+</style>
+</head>
+<body>
+<section class="hero">
+  <h1>R for Data Science — Study Site</h1>
+  <p class="subtitle">
+    Part II〜V の学習HTMLを1つの入口から開けるGitHub Pages用サイトです。
+    各Partは独立したHTMLページとして保持しているので、クイズやインタラクションが壊れにくい構成です。
+  </p>
+</section>
+
+<nav class="nav">
+  <a href="part2-wrangle.html">Part II Wrangle</a>
+  <a href="part3-program.html">Part III Program</a>
+  <a href="part4-model.html">Part IV Model</a>
+  <a href="part5-communicate.html">Part V Communicate</a>
+</nav>
+
+<main class="grid">
+  <a class="card" href="part2-wrangle.html">
+    <div class="part">PART II</div>
+    <div class="title">Wrangle 完全ガイド</div>
+    <p class="desc">tibble、import、tidy data、joins、strings、factors、dates/times を学ぶページ。</p>
+    <div class="tags"><span class="tag blue">tibble</span><span class="tag green">import</span><span class="tag amber">tidy</span><span class="tag purple">joins</span></div>
+  </a>
+  <a class="card" href="part3-program.html">
+    <div class="part">PART III</div>
+    <div class="title">Program Study Page</div>
+    <p class="desc">pipes、functions、vectors、iteration など、Rでプログラムを書くための基礎。</p>
+    <div class="tags"><span class="tag green">functions</span><span class="tag blue">pipes</span><span class="tag red">vectors</span><span class="tag teal">iteration</span></div>
+  </a>
+  <a class="card" href="part4-model.html">
+    <div class="part">PART IV</div>
+    <div class="title">Model Study Site</div>
+    <p class="desc">modelr、linear model、predictions、residuals、many models を整理。</p>
+    <div class="tags"><span class="tag blue">lm()</span><span class="tag red">residuals</span><span class="tag purple">broom</span><span class="tag green">modelr</span></div>
+  </a>
+  <a class="card" href="part5-communicate.html">
+    <div class="part">PART V</div>
+    <div class="title">Communicate Study Site</div>
+    <p class="desc">R Markdown、説明用グラフ、出力形式、分析ノートとしてのworkflow。</p>
+    <div class="tags"><span class="tag amber">Rmd</span><span class="tag blue">ggplot2</span><span class="tag green">formats</span><span class="tag red">workflow</span></div>
+  </a>
+</main>
+
+<section class="workflow">
+  <h2>GitHub Pagesで公開する最小構成</h2>
+  <ol>
+    <li>このフォルダ内の <code>index.html</code> と4つのHTMLをGitHubリポジトリにアップロード。</li>
+    <li>GitHubで <code>Settings → Pages</code> を開く。</li>
+    <li><code>Build and deployment</code> で <code>Deploy from a branch</code> を選ぶ。</li>
+    <li>Branchを <code>main</code>、folderを <code>/root</code> にして保存。</li>
+    <li>数分後に <code>https://ユーザー名.github.io/リポジトリ名/</code> で公開される。</li>
+  </ol>
+</section>
+
+<div class="footer">R for Data Science Study Site — GitHub Pages ready</div>
+</body>
+</html>
